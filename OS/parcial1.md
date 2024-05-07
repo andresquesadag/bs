@@ -228,6 +228,13 @@ tareas de forma simultánea.
 * **Bloque físico y (record) lógico**:  Un *bloque físico* es la unidad más pequeña de almacenamiento que puede ser leída o escrita en un disco por una sola operación de hardware (Usualmente 512 bytes). Un *bloque lógico*, también conocido como bloque de archivo o unidad de asignación, es la abstracción utilizada por los sistemas de archivos para gestionar y organizar los archivos en el almacenamiento.
 * **Empaquetamiento(packing)**: El número de unidades lógicas que caben en un bloque físico determina su empaquetamiento y tiene un impacto en la cantidad de ``fragmentación interna`` (espacio desperdiciado) que se produce.
 * **Directorio**: El directorio puede verse como una tabla de símbolos que traduce los nombres de los archivos a sus bloques de control.
+* **MFD**: Se utiliza para realizar un seguimiento del directorio de cada usuario, y debe actualizarse cuando se añaden o eliminan usuarios del sistema. Directorio de directorios.
+* **Ruta absoluta y relativa**: Abs.-Relacionada con el directorio raíz (C: Program Files/.../...). Relativa - Relacionada con el directorio actual(home/user1/...)
+* **Volumen o unidad lógica**:  Es una única área de almacenamiento accesible con un único sistema de archivos
+* ``UNIX proporciona dos tipos de enlaces para implementar la estructura de grafo acíclico.`` ( Ver "man ln" para más detalles.)
+  * Un **enlace duro** ( normalmente llamado simplemente enlace ) implica múltiples entradas de directorio que se refieren ambas al mismo fichero. Los enlaces duros sólo son válidos para ficheros ordinarios en el mismo sistema de ficheros.
+  * Un **enlace simbólico**, implica un archivo especial, que contiene información sobre dónde encontrar el archivo enlazado. Los enlaces simbólicos pueden utilizarse para enlazar directorios y/o ficheros en otros sistemas de ficheros, así como ficheros ordinarios en el sistema de ficheros actual.
+* ``Windows sólo admite enlaces simbólicos, denominados accesos directos.``
 
 ## Preguntas 13
 
@@ -251,8 +258,19 @@ tareas de forma simultánea.
 7. **¿Qué operaciones se implementan en un directorio?**  createFile, searchFile, renameFile, deleteFile, listDir, traverseDir - Recorrer todos los directorios y todos sus archivos( En aras de la fiabilidad, conviene guardar el contenido y la estructura de todo el sistema de archivos a intervalos regulares).
 8. **¿Qué esquemas de directorio existen?**
    1. Nivel único: Todos los archivos en un solo directorio, requiere de maniobrar con los nombres en caso de haber más de un usuario de un solo dispositivo.
-   2. Nivel doble: Directorios separados para cada usuario. Cada user tiene su UFD(User File Dir.), cada que un usuario inicia se busca su M(aster)FD
+   2. Nivel doble y estructurados como árbol: Directorios separados para cada usuario. Cada user tiene su UFD(User File Dir.), cada que un usuario inicia se busca su M(aster)FD. Usualmente se necesita otro directorio para ejecutables solo(Una **ruta de búsqueda(search path)** es la lista de directorios en los que buscar programas ejecutables, y puede establecerse de forma única para cada usuario.).
+   * Search path: Buscar entre varios directorios hasta encontrar el archivo que se busca al no encontrarlo en el UFD del usuario que lo busca.
+   * Name path (C: userb/test.txt-abs, home/user - relativo).
+   * Se guardan igual que cualquier archivo, pero tienen su propia estructura definida por el SO, además de un bit que los identifica como directorio. Un bit en cada entrada de directorio define la entrada como archivo (0) o como subdirectorio (1).
+   * ``El más común``
+   3. Acíclico: No permite ciclos pero sí permite compartir archivos entre usuarios y directorios, cosa que no permite el de árbol.
+   * Se estructura en enlaces duros y simbólicos (Win solo duros(shortcuts)).
+   * Los enlaces duros requieren de un contador de enlaces.
+   4. Grafo general: Permite ciclos, por ende necesita de un ``Recolector de basura``
 
 ## Recursos 13
 
 ![F13.3](images/tiposDeArchivo.jpg)
+![F13.9](images/treeDir.jpg)
+
+# Cap. 14
