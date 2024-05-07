@@ -225,6 +225,9 @@ tareas de forma simultánea.
 * **Shared y Exclusive lock**: Shared == todos pueden leer, Exclusive = Solo uno puede escribir a la vez y cuando ese proceso escribe los demás no pueden leer.
 * **Número mágico**: Algunos Sistemas UNIX ponen un número al inicio de archivos binarios, el cual indica el tipo de archivo que es.
 * Cuando trabajamos con archivos, los "registros lógicos" contienen la información visible para usuarios y programas. El sistema operativo almacena datos en "bloques físicos", que pueden no coincidir en tamaño con los registros. Para optimizar el espacio, varios registros lógicos se pueden agrupar en un bloque físico, permitiendo una gestión más eficiente de la información
+* **Bloque físico y (record) lógico**:  Un *bloque físico* es la unidad más pequeña de almacenamiento que puede ser leída o escrita en un disco por una sola operación de hardware (Usualmente 512 bytes). Un *bloque lógico*, también conocido como bloque de archivo o unidad de asignación, es la abstracción utilizada por los sistemas de archivos para gestionar y organizar los archivos en el almacenamiento.
+* **Empaquetamiento(packing)**: El número de unidades lógicas que caben en un bloque físico determina su empaquetamiento y tiene un impacto en la cantidad de ``fragmentación interna`` (espacio desperdiciado) que se produce.
+* **Directorio**: El directorio puede verse como una tabla de símbolos que traduce los nombres de los archivos a sus bloques de control.
 
 ## Preguntas 13
 
@@ -233,11 +236,22 @@ tareas de forma simultánea.
    Crear, escribir, leer, borrar, reposicionarse(mover el puntero de la posición actual del archivo a una pos. específica - seek), truncar(cambiar contenido de un archivo sin cambiar sus atributos [además de el tamaño]). Esas son las básicas, también podríamos querer otras que muestren atributos(get), que cambien atributos a un valor específico (set), append, copiar.
 3. **¿Qué información es asociada con una entrada en la Tabla de archivos de todo el Sistema(Sys.-wide)?**
    file_ptr(único de cada proceso), file_open_count, file_location y  access_rights.
-4. **¿Qué métodos de acceso existen?**
+4. **¿Qué desventaja tiene que un SO añada estructura a archivos?** Aumenta el tamaño y complejidad del SO, haciendolo más engorroso.
+5. **¿Cuál es la forma en que se accesa internamente a los datos de un disco?** Por bloques físicos.
+6. **¿Qué métodos de acceso existen?**
    1. Secuencial: El archivo es procesado en orden ``Es el más común de todos``. Record por record.
    * read_next: lee la siguiente porción del archivo y automáticamente avanza un puntero de archivo, que rastrea la ubicación de E/S.
    * write_next: añade al final del archivo y avanza hasta el final del material recién escrito (el nuevo final del archivo).
    * Puede adelantar o atrasarse en 'n' records.
+   2. Directo o relativo: Se elige mediante un param. a qué record se va a accesar.
+   * Útiles para accesar a grandes cantidades de info.
+   * Número relativo de bloque es el índice relativo al inicio del archivo.
+   * Funciones: read(n), write(n)
+   * Demás métodos se pueden construir en base a este, como el . El índice, como un índice en la contraportada de un libro, contiene punteros a los distintos bloques. Para encontrar un registro en el fichero, primero buscamos en el índice y luego utilizamos el puntero para acceder directamente al fichero y encontrar el registro deseado.
+7. **¿Qué operaciones se implementan en un directorio?**  createFile, searchFile, renameFile, deleteFile, listDir, traverseDir - Recorrer todos los directorios y todos sus archivos( En aras de la fiabilidad, conviene guardar el contenido y la estructura de todo el sistema de archivos a intervalos regulares).
+8. **¿Qué esquemas de directorio existen?**
+   1. Nivel único: Todos los archivos en un solo directorio, requiere de maniobrar con los nombres en caso de haber más de un usuario de un solo dispositivo.
+   2. Nivel doble: Directorios separados para cada usuario. Cada user tiene su UFD(User File Dir.), cada que un usuario inicia se busca su M(aster)FD
 
 ## Recursos 13
 
