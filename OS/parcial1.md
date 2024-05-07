@@ -1,3 +1,7 @@
+# **Error conocido**: Hay preguntas y conceptos del Cap2 en la parte de Cap1. :(
+
+---------------------------
+
 # Cap 1
 
 ## Conceptos 1
@@ -28,6 +32,9 @@
 * **Procesador**: Chip físico que contiene uno o más CPUs.
 * **Núcleo(core)**: Unidad básica de computación(cálculos) del CPU.
 * **NUMA (non-uniform mem. access)**: Cuando todos los CPUs comparten espacio de mem. física.
+* **Middleware**:  Frameworks de software que ofrecen servicios adicionales a los desarrolladores, como los que se encuentran en los sistemas operativos móviles más destacados, como iOS de Apple y Android de Google. Estos sistemas incluyen un núcleo central y un software intermedio que respalda diversas funcionalidades, incluidas bases de datos, multimedia y gráficos.
+* **Multiprocesador simétrico y asimétrico**: Todos los procesos trabajan en todo y se dividen el trabajo de todo. En este caso todos los procesos comparten datos de una sola memoria compartida. Los asimétricos tiene su memoria privada cada uno.
+* **Clustering simétrico y asimétrico**: En la agrupación simétrica, dos o más hosts ejecutan aplicaciones y se supervisan mutuamente.En el otro un servidor ejecuta la aplicación mientras los otros servidores aguardan.
 
 ## Preguntas 1
 
@@ -69,10 +76,37 @@ Hardware(CPU, I/O, etc.), Software (Apps, programas) y Usuario.
   La CPU detecta las interrupciones a través de una **línea de solicitud de interrupción** y salta a una **rutina de gestión de interrupciones** basada en el número de interrupción para procesar la interrupción (en el **vector de interrupciones**). El manejador guarda el estado, procesa la interrupción, restaura el estado y devuelve la CPU a su estado anterior. En este proceso intervienen el controlador de dispositivo que señala la interrupción, la CPU que la gestiona y el manejador que da servicio al dispositivo para borrar la interrupción.
 
 * Controlador de disp. *raises*, CPU *catches* and *dispatch*, Majeador *clears*
+* ¿Cuáles son los cuatro componentes de un sistema informático?
 
-12. **Tipos de interrupción de dispositivo**
-    * ``Enmascarable:`` puede ser anulado por la CPU antes de la ejecución de secuencias de instrucciones críticas que no deben ser interrumpidas.
+12. **¿Qué tipos de interrupción existen?**
+    *``Enmascarable:`` puede ser anulado por la CPU antes de la ejecución de secuencias de instrucciones críticas que no deben ser interrumpidas.
     * ``No enmascarable:``que se reserva para eventos como errores de memoria irrecuperables. Osea que no deberían de ser postergados.
+13. **(1.1) ¿Cuáles son los cuatro componentes de un sistema informático?**  
+    Usuario, programas de aplicación, SO y hardware.
+14. **(1.2) Proporcionar al menos tres recursos que el sistema operativo asigna.**  
+    Tiempo del CPU, dispositivos I/O, espacio y almacenamiento en memoria, por ejemplo.
+15. **(1.3) ¿Cuál es el nombre común utilizado para referirse al programa del sistema operativo?**
+      Kernel
+16. **(1.4) ¿Qué suelen incluir los sistemas operativos móviles además del núcleo principal(kernel core)?**  
+Software intermedio (Middleware).
+17. **(1.5)¿Qué es una interrupción?**  
+  Es una señal emitida por hardware o software cuando un proceso o un evento necesita atención inmediata.
+18. **(1.6) ¿Qué operación especial activa una interrupción de software?**  Syscall
+19. **(1.7) ¿Cuál es la ventaja de utilizar un disco de estado sólido frente a un disco magnético?**
+Suelen ser más rápidos para transferrir datos. Se tiene que lo mecánico como el disco magnético es más barato por respecto al espacio que ofrece (del cual puede ofrecer más) pero es más lento.
+20. **(1.8) ¿Cuál es la diferencia entre almacenamiento volátil y no volátil?**  
+Volátil es cuando lo que se guarda en el dispositivo se borra tras perder corriente eléctrica, no volátil es que mantiene los datos aunque no tenga corriente.
+21. **(1.9)¿Cuál es otro término para sistema multiprocesador?** Multinúcleo o paralelo.
+22. **(1.10) Ventajas de los multiprocesadores**  
+    Son más fiables, rápidos y eficientes en general.
+23. **(1.13) ¿En qué se diferencia un sistema en clúster de un sistema multinúcleo?**  
+   Los sistemas en clúster suelen construirse combinando varios ordenadores en un único sistema para realizar una tarea computacional distribuida por todo el clúster. Por otro lado, los sistemas multiprocesador pueden ser una única entidad física compuesta por varias CPU.
+24. **(1.15) ¿Cómo se denomina un programa que se ha cargado y se está ejecutando?**  Proceso.
+25. **(1.26)¿Cuál es la diferencia entre protección y seguridad?**  Protección(preveer) - Cualquier mecanismo para controlar el acceso de procesos o usuarios a los recursos definidos por el SO. Seguridad(defender) - defensa del sistema contra ataques internos y externos.
+26. **¿Qué es un Sistema Distribuido?**  Es una colección de sistemas informáticos físicamente separados y posiblemente heterogéneos, interconectados a través de una red para proporcionar a los usuarios acceso a los diversos recursos que el sistema mantiene.
+27. **¿Cuáles son algunas de las características de los distintos tipos de redes, como LAN, WAN, MAN y PAN, y cómo se diferencian en términos de distancia y funcionalidad?**
+Los diferentes tipos de redes, como LAN, WAN, MAN y PAN, se distinguen principalmente por la distancia que cubren y su funcionalidad. Una LAN conecta computadoras dentro de un área local, como una habitación, un edificio o un campus, mientras que una WAN generalmente conecta áreas más grandes, como edificios, ciudades o países. Por otro lado, una MAN podría interconectar edificios dentro de una ciudad. Además, una PAN se establece entre dispositivos que se encuentran a una distancia corta, como entre un teléfono y un auricular Bluetooth. Estas redes pueden utilizar diferentes medios de transporte, como cables de cobre, fibras ópticas o tecnología inalámbrica, y varían en términos de rendimiento y confiabilidad según el medio utilizado.
+28. **(1.11 - Práctica) Distinguir entre los modelos cliente-servidor y peer-to-peer de los sistemas distribuidos.**
 
 ## Recursos 1
 
@@ -80,6 +114,8 @@ Hardware(CPU, I/O, etc.), Software (Apps, programas) y Usuario.
 ![F1.6](images/storDevc-hierarchy.jpg)
 ![F1.7](images/modernSysWork.jpg)
 ![F1.14](images/storageTypesCharacteritics.jpg)
+![F1.8](images/mpSimetrico.jpg)
+![F1.9](images/mpAsimetrico.jpg)
 
 # Cap. 2
 
@@ -91,14 +127,14 @@ Hardware(CPU, I/O, etc.), Software (Apps, programas) y Usuario.
 ## Preguntas 2
 
 1. **¿Qué servicios ofrece un SO?**
-   Interfaz de Usuario (GUI, touch-screen, CLI), Seguridad, manipulación del Sistema de Archivos, ejecución de programas, operaciones de I/O, detección de errores, registros(log), comunicación,  Asignación de recursos, protección y seguridad.(10)
+   Interfaz de Usuario (GUI, touch-screen, CLI), manipulación del Sistema de Archivos, ejecución de programas, operaciones de I/O, detección de errores, registros(log), comunicación,  Asignación de recursos, protección y seguridad.(9)
 
 2. **¿Qué tipos de llamados al sistema existen?**
    Existen 6 grandes grupos: Control de procesos, manejo de archivos, manejo de dispositivos, mantenimiento de info., comunicación y protección.
 
 3. **¿Cómo es el ciclo de un llamado al sistema por parte de una aplicación de usuario?**
   Se produce el llamado tras el uso de una función de algún lenguaje (API), este llamado en modo usuario hace que la app guarde en un Stack on un arreglo en memoria los parámetros que se introdujeron en la API. Luego el Sistema pasa a modo Kernel para hacer el verdadero Syscall el cual se elige en el vector syscall, el SO toma la dirección de los params. del registro donde la app de usuario lo puso, y con esto el syscall obtiene sus datos haciendo POP en el stack en mem. Este proceso se hizo con una Interrupción la cual termina al retornar del syscall.
-4. **¿Qué tipo de servicios o utilidades ofrecen los SO?**
+1. **¿Qué tipo de servicios o utilidades ofrecen los SO?**
    * Manejo de archivos: Crear, borrar, copiar, renombrar, listar y en general manipular archivos y directorios.
    * Modificación de archivos: Crear y modificar archivos que están en almacenamiento.
    * Estado e información: Dar la hora, espacio libre en el disco, cantidad de mem., cantidad de usuarios, información de registro(logging) y depuración(debugging).
@@ -108,3 +144,80 @@ Hardware(CPU, I/O, etc.), Software (Apps, programas) y Usuario.
    * Servicios de fondo (background): Procesos de uso general que se inician en tiempo de arranque. ``daemons, servicios o subsistemas``. Además de programas de aplicación de uso común.
 
 ## Recursos 2
+
+# Cap. 5
+
+## Conceptos 5
+
+* **Calendarización expropiativa y no expropiativa**:
+La programación expropiativa consiste en asignar recursos como ciclos de CPU a un proceso durante un tiempo limitado.
+Ventajas de la programación expropiativa:
+
+* Garantiza que ningún proceso monopolice el procesador, lo que aumenta la fiabilidad.
+* Mejora los tiempos medios de respuesta y facilita una distribución equitativa del tiempo de CPU.
+Desventajas de la programación expropiativa:
+
+* Requiere importantes recursos informáticos para el cambio de contexto.
+* Puede hacer que los procesos de baja prioridad esperen si los de alta prioridad llegan con frecuencia.
+
+Programación no expropiativa:
+
+Implica la retención de recursos de CPU por parte de un proceso hasta su finalización o el paso a un estado de espera.
+Ventajas de la programación no expropiativa:
+
+* Carga de programación mínima y procedimiento sencillo con alta tasa de rendimiento.
+* Requiere menos recursos computacionales en comparación con la programación preferente.
+Desventajas de la programación no expropiativa:
+* Los procesos pueden experimentar tiempos de respuesta elevados con posibilidad de "morir de hambre"(starvation) del sistema debido a fallos.
+Los procesos con tiempos de ráfaga cortos podrían morir de hambre si no se permite el derecho preferente.
+Principales diferencias entre la planificación preferente y no preferente:
+
+Incluye distinciones en la asignación de CPU, interrupción de procesos, sobrecarga de programación y flexibilidad.
+La programación preferente permite una mejor utilización de la CPU, pero implica una mayor sobrecarga de programación.
+
+* **Dispatcher**: El despachador en la programación de la CPU cambia el control entre procesos, cambia al modo de usuario y reanuda los programas. Su objetivo es ser rápido para minimizar la latencia de envío durante los cambios de contexto.
+* **Ciclo de ráfaga(burst cycle) CPU/IO**:
+Todos los procesos tienen ese ciclo en que alternan ráfagas de CPU con ráfagas de IO.
+Un proceso ligado al CPU (CPU-bounded) suele tener pocas pero grande ráfagas de CPU. Uno ligado a E/S(I/O) más bien tiene muchas
+pero cortas ráfagas de CPU.
+  * ``CPU(compute) or IO-bounded process``: Se les llama así cuando el tiempo para completar un proceso está principalmente determinado por alguno de los dos.
+* **Process Control Block (PCB)**:  Es una estructura de datos fundamental utilizada por el sistema operativo para representar y administrar los procesos que se ejecutan en el sistema. El PCB contiene información importante sobre cada proceso, como su identificador único, el estado actual de ejecución, los registros de la CPU, la información de programación (como prioridad y tiempo de ejecución restante), información de gestión de memoria y de recursos, y otros datos necesarios para administrar y realizar el cambio de contexto entre procesos.
+* **Quantum (cuántico) o trozo de tiempo (time slice)**: Tiempo que se le brinda a cada proceso en el CPU. (Usualmente se implementa con 100ms)
+* **Overhead**: Son los gastos en los que el SO incurre por hacer un cambio de contexto(Ver recursos).
+
+## Preguntas 5
+
+1. **¿Qué criterios de calendarización existen?**
+   * Uso del CPU.
+   * Rendimiento
+   * Tiempo de espera.
+   * Tiempo de respuesta.
+   * Tiempo de vuelta(turnaround)
+2. **¿Qué es y para qué sirve el Scheduling (Calendarización) en Sistemas Operativos?**  
+Se usa para dar un orden en el que ejecutarse las diversas
+tareas que tiene pendientes el Sistema Operativo con el uso eficiente del CPU. Si un CPU tiene solo un core, entonces podría correr solo
+un proceso a la vez, lo que haría un uso ineficiente de ese CPU, aquí es donde entra, los algoritmos de calendarización, con los que se
+logra un uso productivo del CPU evitando momentos en los que el CPU no tiene nada productivo que hacer, dando la capacidad de hacer varias
+tareas de forma simultánea.
+3. **¿Qué tipo de algoritmos de caledarización existen**
+
+   * SJF-SRTF: Se basa en el burst time de cada proceso. SJF es no expropiativo mientras que JRTF es expropiativo, osea que si llega un proceso nuevo a la cola y resulta ser más pequeño que el que se estaba ejecutando, entonces lo expropian.
+   * FCFS: Se basa en el tiempo de llegada. Puede haber un efecto convoy al tener a procesos esperando mucho tiempo por un proceso que utilice mucho tiempo el CPU, al no ser expropiativo. No se puede implementar a nivel de calendarización de CPU pues no se puede saber el burst time del siguiente proceso, una forma de hacerlo el estimarlo
+   * RR(Round Robin): Usa el quantum para marcar el tiempo máximo que puede estar un proceso. Tiene una política parecida a FCFS.
+   * Por prioridad: Se basa en el nivel de prioridad. También tiene una política FCFS si hay empate de prioridad. Depende del Sistema si un número bajo indica mayor o menor prioridad que un número más alto ``En el libro se utilizan números bajos para dar mayor prioridad. Osea 1 > 19 en cuanto a nivel de prioridad``. Una versión expropiativa de este algoritmo puede llegar a expropiar a un proceso si llega uno nuevo a la cola el cual tiene mayor prioridad. Sus principal problema es que puede ocasionar ``starvation`` en procesos de prioridad baja, ```¿Cómo se soluciona el starvation aquí?: Avejentando(aging) al proceso. Se le sube la prioridad a los procesos que llevan mucho tiempo en espera. Otra opción es combinarlo con RR``
+   * Cola Multinivel: Hacer una cola por cada nivel de prioridad, ese nivel también puede basarse en el tipo de proceso que se quiere ejecutar.
+   * Cola de retroalimentación multinivel: Se baja el nivel de prioridad de un proceso si se tarda más de lo establecido por su nivel de cola, se sube si lleva mucho tiempo (aging). El tiempo de cada nivel de colas es la mitad del anterior hasta que el último nivel tiene FCFS (usualmente).
+
+## Recursos 5
+
+![cambioDeContexto](images/cambioDeContexto.jpg)
+
+# Cap. 13
+
+## Conceptos 13
+
+* Archivo: Unidad de Almacenamiento lógico.
+
+## Preguntas 13
+
+## Recursos 13
