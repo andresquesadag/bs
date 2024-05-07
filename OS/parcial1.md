@@ -274,3 +274,48 @@ tareas de forma simultánea.
 ![F13.9](images/treeDir.jpg)
 
 # Cap. 14
+
+## Conceptos 14
+
+* Los dispositivos **NVM** suelen estar divididos en bloques de 4096 bytes, sus métodos de transferencia son similares a los de las unidades de disco.
+* **Open en el FS**: Retorna un puntero al Process open files table.
+* **Fragmentación externa e interna**: Ocurre cuando hay suficiente espacio libre en el disco duro para almacenar un archivo, pero este espacio está dividido en varios bloques dispersos por el disco. Como resultado, aunque la cantidad total de espacio libre sea suficiente para el archivo, no existe un bloque contiguo lo suficientemente grande como para alojarlo. La interna: se produce cuando el espacio asignado a un archivo es mayor que el tamaño real del archivo.
+
+## Preguntas 14
+
+1. **¿Cuáles son los dos problemas principales de un Sistema de archivos?**  qué tanto del Sistema debe poder ver el usuario y  qué estructuras de datos y algoritmos utilizar para mapear al Sistema de archivos lógico en los dispositivos de almacenamiento secundario(NVM).
+2. **Describa las capas del Sistema de Archivos**
+   * El *Control de I/O* consiste en controladores de dispositivos, programas de software especiales ( a menudo escritos en ensamblador ) que se comunican con los dispositivos leyendo y escribiendo códigos especiales directamente hacia y desde las direcciones de memoria correspondientes a los registros de la tarjeta controladora. Cada tarjeta controladora ( dispositivo ) de un sistema tiene un conjunto diferente de direcciones ( registros, también conocidos como puertos ) que escucha, y un conjunto único de códigos de comando y códigos de resultados que entiende.
+   * El *nivel básico del sistema de archivos* trabaja directamente con los controladores de dispositivos en términos de recuperación y almacenamiento de bloques de datos en bruto, sin ninguna consideración por lo que hay en cada bloque. Dependiendo del sistema, se puede hacer referencia a los bloques con un único número de bloque, ( por ejemplo, bloque # 234234 ), o con combinaciones de cabeza-sector-cilindro.
+   * El *módulo de organización de archivos* conoce los archivos y sus bloques lógicos, y cómo se asignan a los bloques físicos del disco. Además de traducir de bloques lógicos a físicos, el módulo de organización de archivos también mantiene la lista de bloques libres, y asigna bloques libres a los archivos según sea necesario.
+   * El *sistema lógico de ficheros* se ocupa de todos los metadatos asociados a un fichero ( UID, GID, modo, fechas, etc ), es decir, todo lo relacionado con el fichero excepto los datos en sí. Este nivel gestiona la estructura de directorios y la asignación de nombres de archivos a bloques de control de archivos (FCB), que contienen todos los metadatos, así como información sobre el número de bloque para encontrar los datos en el disco.
+3. **¿Qué estructuras tiene el FS en el disco?**
+   * **En almacenamiento** :
+   * Bloque de control de arranque: Contiene en las primeras pos. del volumen la información necesaria para arrancar el SO. Si no lo contiene entonces está vacío.
+   * Bloque de Control de Volumen: contiene detalles del volumen, como el número de bloques en el volumen, el tamaño de los bloques, un recuento de bloques libres y punteros a bloques libres, y un recuento de FCB(File Control Block) libres y punteros a FCB. En UFS, se denomina ``superbloque``. ``En NTFS, se almacena en la tabla maestra de archivos``.
+   * Estructura de Directorios: Se utiliza para organizar los archivos.  Un FCB por archivo contiene muchos detalles sobre el archivo. Tiene un número identificador único para permitir la asociación con una entrada de directorio. En NTFS, esta información se almacena en la tabla maestra de archivos, que utiliza una estructura de base de datos relacional, con una fila por archivo.
+   * También hay varias estructuras de datos clave almacenadas en **memoria**:
+     * Una *tabla de montaje en memoria* contiene info. de cada volumen montado en mem.
+     * Una *caché de directorios en memoria* con la información de los directorios a los que se ha accedido recientemente.
+     * Una *tabla de archivos abiertos de todo el SO* de todo el sistema, que contiene una copia del FCB para cada archivo abierto actualmente en el sistema, así como otra información relacionada.
+     * Una *tabla de archivos abiertos por proceso*, que contiene un puntero a la tabla de archivos abiertos del sistema, así como otra información. (Por ejemplo, el puntero a la posición actual del archivo puede estar aquí o en la tabla de archivos del sistema, dependiendo de la implementación y de si el archivo se comparte o no). )
+4. **Explique el cierre de un archivo en FS** Se llama a close(file) para un proceso, se remueve ese file de la lista de abiertos en la tabla del proceso, mantieniendo el puntero a la tabla de abiertos del sistema. En la tabla general se decrementa el contador de procesos que lo tienen abierto, si este contador queda en cero: Se remueve del la tabla general tras copiarse de vuelta el FCB al directorio. Si es mayor a cero no pasa nada más.
+5. **¿Cómo se puede implementar un directorio?**
+   * Lista lineal: Se puede hacer con un arreglo o con un lista enlazada. El problema es que puede ser lento a la hora de buscar archivos, se pueden hacer mejoras como por ejemplo usar búsqueda binaria sobre un arreglo ordenado. Las supresiones pueden hacerse moviendo todas las entradas, marcando una entrada como suprimida o moviendo la última entrada a la nueva posición vacante.
+   * Tabla Hash: A hash table can also be used to speed up searches. Hash tables are generally implemented in addition to a linear or other structure. Problema: Tamaño fijo.
+
+# Recursos 14
+
+![UsageCreate](images/creacionDeArchivoFS.jpg)
+![UsageOpen1](images/abrirArchivoFS-Encontrado.jpg)
+![UsageOpen2](images/abrirArchivoFS-NoEncontrado.jpg)
+![UsageGeneral](images/usageGeneralView.jpg)
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+
+# Videos de encriptación
