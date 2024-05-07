@@ -216,8 +216,29 @@ tareas de forma simultánea.
 
 ## Conceptos 13
 
-* Archivo: Unidad de Almacenamiento lógico.
+* **Archivo**: Unidad de Almacenamiento lógico.
+* **Enlace duro** (hard-link): Cuando un archivo tiene varios nombres(entradas a al directorio).
+* **Tabla de archivos abiertos**: Se puede tener info de un archivo abierto indexado aquí. Para evitar hacer búsquedas por el archivo constantemente.
+* Delete y Create funcionan con el archivo cerrado.
+* Open permite modos, tales que solo-lectura, solo-escritura, etc.
+* **Tabla por proceso y tabla de todo el sistema**: La 1era sigue la pista de cada archivo que abre un proceso, conteniendo el uso que le da tal proceso a tal archivo. Cada entrada de la 1era apunta a la 2da tabla. La tabla de todo el sistema contiene información independiente del proceso, como la ubicación del archivo en el disco, las fechas de acceso y el tamaño del archivo. Cuando un proceso 'x' abre un archivo que nadie ha abierto, este archivo tiene su entrada a la tabla 2 y 1, cuando un proceso 'y' abre ese mismo archivo lo único que se hace es una entrada a la tabla 1 la cual apunta a la entrada ya existente del archivo en tabla 2. Esto se controla con un open_Count en la entrada a la tabla 2.
+* **Shared y Exclusive lock**: Shared == todos pueden leer, Exclusive = Solo uno puede escribir a la vez y cuando ese proceso escribe los demás no pueden leer.
+* **Número mágico**: Algunos Sistemas UNIX ponen un número al inicio de archivos binarios, el cual indica el tipo de archivo que es.
+* Cuando trabajamos con archivos, los "registros lógicos" contienen la información visible para usuarios y programas. El sistema operativo almacena datos en "bloques físicos", que pueden no coincidir en tamaño con los registros. Para optimizar el espacio, varios registros lógicos se pueden agrupar en un bloque físico, permitiendo una gestión más eficiente de la información
 
 ## Preguntas 13
 
+1. **¿Qué atributos tiene un archivo?**  Nombre, localización(en mem.), tipo, identificador(etiqueta para que la máquina lea, no legible humanamente), tamaño, protección(quién lo puede editar, leer, etc.) y marcas de tiempo. Archivos con atributos extendidos pueden agregar cosas como el tipo de codificado o aspectos de seguridad sobre el archivo, etc.
+2. **¿Qué funciones tiene un Sistema de Archivos?**
+   Crear, escribir, leer, borrar, reposicionarse(mover el puntero de la posición actual del archivo a una pos. específica - seek), truncar(cambiar contenido de un archivo sin cambiar sus atributos [además de el tamaño]). Esas son las básicas, también podríamos querer otras que muestren atributos(get), que cambien atributos a un valor específico (set), append, copiar.
+3. **¿Qué información es asociada con una entrada en la Tabla de archivos de todo el Sistema(Sys.-wide)?**
+   file_ptr(único de cada proceso), file_open_count, file_location y  access_rights.
+4. **¿Qué métodos de acceso existen?**
+   1. Secuencial: El archivo es procesado en orden ``Es el más común de todos``. Record por record.
+   * read_next: lee la siguiente porción del archivo y automáticamente avanza un puntero de archivo, que rastrea la ubicación de E/S.
+   * write_next: añade al final del archivo y avanza hasta el final del material recién escrito (el nuevo final del archivo).
+   * Puede adelantar o atrasarse en 'n' records.
+
 ## Recursos 13
+
+![F13.3](images/tiposDeArchivo.jpg)
