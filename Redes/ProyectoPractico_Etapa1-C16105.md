@@ -327,6 +327,37 @@ interface GigabitEthernet0/1
  switchport access vlan 201
 !
 ```
+s105
+```
+!
+interface FastEthernet0/1
+ switchport access vlan 101
+!
+interface FastEthernet0/2
+ switchport access vlan 102
+!
+interface FastEthernet0/3
+ switchport access vlan 103
+!
+interface FastEthernet0/4
+ switchport access vlan 104
+!
+interface FastEthernet0/5
+ switchport access vlan 105
+!
+interface FastEthernet0/6
+ switchport access vlan 201
+!
+!
+interface FastEthernet0/24
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 101-105,201
+ switchport mode trunk
+!
+interface GigabitEthernet0/1
+ switchport access vlan 201
+!
+```
 IDF Anexo
 ```
 !
