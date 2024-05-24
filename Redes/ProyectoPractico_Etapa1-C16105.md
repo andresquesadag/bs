@@ -92,6 +92,9 @@ Así están configurados los servers DHCP de cada VLAN para dar direcciones ip d
 ![alt text](image-4.png)
 Así se ve la WLAN "AURI" dentro del WLC.
 
+![alt text](image-11.png)
+Para conectar un dispositivo(en este caso una laptop) a la red inalámbrica AURI se entra a Desktop>PC Wireless y de ahí se aparece AURI, si no aparece es necesario crear un perfil especificando aspectos de la red a la que uno quiere conectar el dispositivo, como el nombre de la red, la contraseña, tipo de protección, etc.
+
 ## Dump de intrucciones sobre switches y router
 
 * Router: 
@@ -308,9 +311,6 @@ interface GigabitEthernet0/1
 ```
 s104
 ```
-interface GigabitEthernet0/1
- switchport access vlan 201
-!
 !
 interface FastEthernet0/1
  switchport access vlan 104
@@ -322,6 +322,9 @@ interface FastEthernet0/2
 !
 interface FastEthernet0/3
  switchport access vlan 104
+!
+interface GigabitEthernet0/1
+ switchport access vlan 201
 !
 ```
 IDF Anexo
@@ -339,7 +342,7 @@ interface FastEthernet0/24
  switchport mode trunk
 !
 ```
-MDF Anexo
+MDF Anexo (S101_5)
 ```
 !
 interface FastEthernet0/1
@@ -395,26 +398,6 @@ interface FastEthernet0/24
  switchport mode trunk
 !
 ```
-Principal Viejo
-```
-!
-interface FastEthernet0/1
- switchport trunk native vlan 999
- switchport trunk allowed vlan 103,201
- switchport mode trunk
-!
-!
-interface FastEthernet0/23
- switchport trunk native vlan 999
- switchport trunk allowed vlan 104,201
- switchport mode trunk
-!
-interface FastEthernet0/24
- switchport trunk native vlan 999
- switchport trunk allowed vlan 103-104,201
- switchport mode trunk
-!
-```
 Principal general
 ```
 interface FastEthernet0/1
@@ -438,12 +421,42 @@ interface GigabitEthernet0/1
  switchport mode trunk
 !
 ```
-
+Principal Viejo
+```
+!
+interface FastEthernet0/1
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 103,201
+ switchport mode trunk
+!
+!
+interface FastEthernet0/23
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 104,201
+ switchport mode trunk
+!
+interface FastEthernet0/24
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 103-104,201
+ switchport mode trunk
+!
+```
 
 ## Pruebas sobre la Red
 
 **DHCP en un PC**: ![alt text](image-5.png)
+
 **DHCP en un LAP**: ![alt text](image-6.png)
-**Intento de intercambio entre PCs de la misma VLAN vs de diferente VLAN**: ![alt text](image-7.png)
-**Laptop y PC conectados a internet**: ![alt text](image-8.png)![alt text](image-9.png)
-**index.html del server HTTP**: ![alt text](image-10.png)
+
+**Intento de intercambio entre PCs de la misma VLAN vs de diferente VLAN**:
+![alt text](image-12.png)
+![alt text](image-13.png)
+
+**Laptop y PC conectados a internet**: 
+![alt text](image-8.png)![alt text](image-9.png)
+
+**index.html del server HTTP**: 
+![alt text](image-10.png)
+
+**Prueba de PC aleatorio a router**:
+![alt text](image-14.png)
