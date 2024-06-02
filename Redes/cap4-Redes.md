@@ -1,0 +1,46 @@
+1. Explique con sus propias palabras, ¿por qué es preferible realizar una asignación dinámica de un canal de transmisión multiacceso en lugar de realizar una asignación estática de dicho canal?
+R/La asignación dinámica de un canal de transmisión multiacceso es preferible a una asignación estática porque maximiza la eficiencia en el uso del ancho de banda al adaptarse a las necesidades en tiempo real. En una asignación estática, el ancho de banda se desperdicia cuando los usuarios asignados están inactivos, mientras que una asignación dinámica redistribuye el ancho de banda no utilizado a aquellos que lo necesitan, mejorando así la utilización del espectro disponible. Además, la asignación dinámica es más adaptable al tráfico variable, permitiendo una mejor calidad de servicio y flexibilidad al ajustar la distribución del ancho de banda según la demanda actual, lo que es especialmente beneficioso cuando el tráfico de datos es intermitente o en ráfagas.
+
+2. Explique con sus propias palabras, ¿Cuáles son las principales diferencias entre los protocolos CSMA persistente-1, CSMA persistente-p, CSMA no persistente, CSMA con detección de colisiones?
+R/ El CSMA persistente-1 escucha el canal antes de transmitir. Si el canal está libre, transmite de inmediato; si está ocupado, espera hasta que esté libre, esto implica que tiene una probabilidad de 100% a transmitir de forma inmediata, mientras que el persistente-p tiene una probabilidad 'p' de hacerlo y una probabilidad 1-p de no hacerlo sino que esperar hasta la siguiente ranura de tiempo.
+
+El CSMA no persistente por otro lado, no está esperando a la primera oportunidad para transmitir sino que si no puede directamente espera un tiempo aleatorio y vuelve a revisar, osea no está constantemente revisando si puede trasnmitir o no.
+
+El CSMA/CD es único en que no solo escucha el canal antes de transmitir, sino que también detecta colisiones mientras transmite. Si detecta una colisión, la transmisión se detiene inmediatamente y la estación espera un tiempo aleatorio antes de intentarlo de nuevo.
+
+3. Explique con sus propias palabras, ¿en qué consiste el protocolo libre de colisiones denominado paso de token? ¿cómo opera dicho protocolo?
+R/ El protocolo de paso de token es una forma de organizar cómo las computadoras en una red envían datos sin chocar entre sí. Funciona usando un "token", que es como un permiso para enviar datos. El token se pasa de una computadora a otra en un orden fijo. Solo la computadora que tiene el token puede enviar datos. Si tiene datos para enviar, lo hace y luego pasa el token a la siguiente. Si no tiene datos, simplemente pasa el token sin enviar nada. Existen dos variantes: 
+
+1. Anillo de tokens: Las computadoras están conectadas en un círculo. El token se pasa de una a otra alrededor del círculo.
+
+2. Bus de tokens: Las computadoras están conectadas a una línea común y el token se pasa siguiendo un orden preestablecido.
+
+4. Explique con sus propias palabras, ¿cuál es la diferencia entre un hub y un conmutador (switch)? ¿cómo opera cada uno de ellos?
+Un hub simplemente conecta todos los cables que llegan a él. Cuando una computadora envía datos, el hub los retransmite a todas las computadoras en la red, sin importar a quién van dirigidos los datos. Esto significa que todos los dispositivos conectados al hub comparten el mismo ancho de banda y pueden colisionar si envían datos al mismo tiempo. Un switch en cambio es más inteligente, pues pese a que conecta los dispositivos de forma similar a un hub, el switch envía los datos solo al dispositivo específico al que están destinados. Cada puerto del switch actúa como un dominio de colisión independiente, lo que significa que dos dispositivos pueden comunicarse simultáneamente sin interferir entre sí.
+
+
+En un switch o conmutador cada puerto es su propio dominio de colisión independiente, dado que en cada uno de los dos switches hay 4 dispositivos conectados, entonces hay 8 dominios de colisión entre los dos switches. En el caso del hub independientemente de cuántos dispositivos tiene conectados existe un solo dominio de colisión compartido. Como El hub se conecta con un switch entonces cuenta como el 4to dominio de colisión del switch y no se cuenta el dispositivo conectado al hub. Finalmente, la conexión entre los routers suma un dominio de colisión más. Hay 9 dominios de colisión en esta topología.
+
+5. En el contexto de las redes ethernet conmutadas, ¿a qué se refiere el concepto de autonegociación?
+R/ Es un proceso en el que los dispositivos se comunican entre sí para decidir automáticamente la mejor velocidad (10 Mbps o 100 Mbps) y si pueden enviar y recibir datos al mismo tiempo (full-dúplex) o no (half-dúplex). Esto ayuda a que equipos viejos y nuevos funcionen juntos sin necesidad de configuraciones manuales.
+
+Explique con sus propias palabras, ¿en qué consisten los problemas de la terminal expuesta y la terminal oculta que pueden presentarse en las redes WLAN?
+R/ Problema de la terminal expuesta:
+Este problema se da cuando una estación (B) quiere enviar datos a otra estación (C), pero decide no hacerlo porque detecta que una estación cercana (A) está transmitiendo a una cuarta estación (D). Aunque la transmisión de A no interferiría con la comunicación entre B y C, B percibe el canal como ocupado y se abstiene de transmitir, desperdiciando así una oportunidad de comunicación que no habría causado interferencias
+- Problema de la terminal oculta: Este problema ocurre cuando una estación (A) quiere enviar datos a otra estación (B), pero no puede detectar que una tercera estación (C) ya está transmitiendo a B porque está fuera del alcance de A. Como A no puede "ver" la transmisión de C, puede pensar erróneamente que el canal está libre y empezar a transmitir, causando una colisión en B que no puede manejar ambas transmisiones simultáneamente. Esto reduce la eficiencia de la red debido a las colisiones no detectadas.
+
+- Problema de la terminal expuesta: Este problema se da cuando una estación (B) quiere enviar datos a otra estación (C), pero decide no hacerlo porque detecta que una estación cercana (A) está transmitiendo a una cuarta estación (D). Aunque la transmisión de A no interferiría con la comunicación entre B y C, B percibe el canal como ocupado y se abstiene de transmitir, desperdiciando así una oportunidad de comunicación que no habría causado interferencias
+
+En las redes WLAN, las redes de distribución conectan varios puntos de acceso (AP) entre sí y con la red principal mediante cables, extendiendo la cobertura, facilitando el roaming de dispositivos, centralizando la gestión y distribuyendo la carga de tráfico. Esto permite que los dispositivos se muevan sin perder conexión, simplifica la administración y mejora el rendimiento de la red al evitar sobrecargas en un solo punto de acceso.
+
+6. Explique con sus propias palabras, ¿cuáles son las principales diferencias entre una piconet y una scatternet, utilizadas en las redes bluetooth?
+r/ Una piconet es una red simple con un dispositivo principal (maestro) y hasta siete dispositivos conectados (esclavos) cercanos. Una scatternet es una red más grande que conecta varias piconets a través de algunos dispositivos que actúan como puentes entre ellas. Básicamente, una piconet es una pequeña red local, mientras que una scatternet es una combinación de varias piconets para cubrir un área mayor y conectar más dispositivos.
+
+7. Explique con sus propias palabras, en la tecnología RFID ¿cuáles son las principales diferencias entre un lector y una etiqueta?
+R/ En la tecnología RFID, los lectores son dispositivos activos que envían señales de radio para comunicarse con las etiquetas, las cuales son dispositivos pasivos o semipasivos que responden a estas señales. Los lectores tienen su propia fuente de energía, pueden leer y escribir datos, y manejar múltiples etiquetas a la vez. En contraste, las etiquetas dependen de la señal del lector para activarse y transmitir información, son más simples y económicas, y generalmente están en estado inactivo hasta ser activadas.
+
+
+Es importante en redes conmutadas para evitar bucles que causan problemas de transmisión. Funciona eligiendo un switch principal (raíz) mediante el intercambio de información entre los switches para determinar el de menor dirección. Luego, cada switch determina la ruta más corta hacia este switch raíz y desactiva las conexiones adicionales que puedan crear bucles. El protocolo se mantiene en funcionamiento para detectar y ajustar cualquier cambio en la red, asegurando siempre caminos únicos y sin bucles. Esto evita que los datos se queden atrapados en bucles infinitos y garantiza una transmisión eficiente y estable.
+
+
+El estándar 802.1Q se usa para gestionar redes, en Ethernet para manejar VLANs. Esto permite dividir una red en varias partes más pequeñas y separadas, mejorando la seguridad y el control del tráfico. Cada vez que un switch recibe datos, la etiqueta 802.1Q le dice a qué parte de la red (VLAN) pertenecen esos datos. Así, los switches pueden dirigir los datos correctamente sin que se mezclen entre las diferentes VLANs. 
