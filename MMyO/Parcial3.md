@@ -13,7 +13,8 @@ M/M/_:
 ## Fórmulas M/M/s
 ![alt text](image-3.png)
 ![alt text](image-4.png)
-![alt text](image-5.png)
+### Corregidas
+![alt text](image-6.png)
 
 ## Minimizar algo : C_t = C_s*s + C_w*L
 
