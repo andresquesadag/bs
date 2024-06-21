@@ -8,14 +8,22 @@ Andrés Quesada González C16105
 
 ## Correcciones de la anterior etapa.
 ### NAT funcionando:
-**TODO: Prueba**
+![alt text](image-15.png)
 
 ## Descripción de la Red (solo los cambios respecto a la anterior)
 
+Se tienen varias redes locales conectadas entre sí con el fin de simular la red de la UCR. En esta ocasión se toman las redes de METICS y el Centro de Informática de la UCR y se conectan mediante routers con IPs públicas entre sí y también a la ECCI que ya estaba trabajada en la Etapa 1. Se establece disponibilidad entre servidores que contienen la página web de la ECCI en el centro de datos del edificio Anexo, la página web de M.V. en METICS y la página del Centro de informática en el edificio respectivo.
+
+En este caso a diferencia de la ECCI, METICS y C.I. están solo de manera representativa siendo redes pequeñas con un PC y un servidor HTTP únicamente. 
+La forma de disponer de todos los servidores desde fuera de esas redes es mediante un anillo de Routers y el uso del protocolo OSPF con el que se logra encontrar el camino más corto para que un "mensaje" de una red llegue a otra por el camino más corto posible.
+
 ## Componentes agregados a la Red
+* PCs: Un PC por cada red nueva excepto en la de internet (200.0.0.0/30), además de un PC para pruebas en el CD 105 y uno para controlar el router de la ECCI en el MDF que está en el Edificio Anexo.
+* Routers: Cuatro routers POP (Point of Presence) para transmitir los datos necesarios entre redes distintas.
+* Servidores: Contienen las páginas de MV, ECCI y CI.
 
 ### La Red descrita se ve en la siguiente imágen.
-**TODO: Imagen de la red terminada**
+![alt text](image-16.png)
 
 ## Planificación de subnetting
 ### Red original
