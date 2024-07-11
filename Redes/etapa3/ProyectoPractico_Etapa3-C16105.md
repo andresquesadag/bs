@@ -55,7 +55,9 @@ Para lograr que los proveedores pudieran acceder a la UCR pero no accederse entr
 * Nota: Usar access-list no es la manera correcta, pero no encontré otra forma de hacerlo que no fuera con "distribute-list", "prefix-list" o "route-map" los cuales son comando que no están disponibles en la versión gratuita de Packet Tracer que se ofrece en: https://skillsforall.com/resources/lab-downloads?userLang=es-XL&courseLang=en-US. 
 * ![alt text](image-8.png)
 
-La forma correcta se explica en: https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13750-22.html ó https://www.cisco.com/c/es_mx/support/docs/ip/border-gateway-protocol-bgp/217964-configure-sample-for-bgp-with-two-differ.html
+La forma correcta se explica en: 
+* https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13750-22.html
+* https://www.cisco.com/c/es_mx/support/docs/ip/border-gateway-protocol-bgp/217964-configure-sample-for-bgp-with-two-differ.html
 
 ### DNS
 

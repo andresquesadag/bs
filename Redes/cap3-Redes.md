@@ -50,3 +50,56 @@ En sistemas que son muy confiables basta con saber si hubo un error y que el emi
 Consisten en agregar un bit adicional, conocido como bit de paridad, a un conjunto de datos. Este bit se calcula para que el número total de bits "1" en el conjunto, incluyendo el bit de paridad, sea par (paridad par) o impar (paridad impar). Por ejemplo, si los datos originales tienen un número impar de bits "1", se agrega un bit de paridad "1" para hacer que el número total sea par, y viceversa. Durante la transmisión, se envían los datos junto con el bit de paridad. Al recibir los datos, el receptor verifica la paridad sumando todos los bits.
 
 En el contexto de la capa de enlace de datos, explique con sus propias palabras, ¿en qué consisten los protocolos de ventana deslizante?
+
+• Tres tipos de servicios:
+• Servicio sin conexión ni confirmación de recepción. Tasa de error baja
+• Ejemplo: Ethernet
+• Servicio sin conexión con confirmación de recepción. Canales no confiables
+• Ejemplo. 802.11 WIFI
+• Servicio orientado a conexión con confirmación de recepción. Aplicaciones donde se asegura.
+• Transferencias pasan por tres fases distintas:
+
+Para dividir los datos en tramas, se tiene cuatro métodos:
+• Conteo de bytes.
+• Bytes bandera con relleno de bytes.
+• Bits bandera con relleno de bits: un bit 0 entre cada 5 unos
+• Violaciones de codificación de la capa física.
+![alt text](image-22.png)
+![alt text](image-23.png) se añade un ESC si hay un ESC o FLAG en medio de los datos.
+
+• Dos estrategias básicas para manejar los errores
+• Códigos de corrección de errores -+ se incluye suficiente
+información redundante para que el receptor pueda deducir cuáles
+debieron ser los datos transmitidos.
+• Códigos de detección de errores se incluye sólo suficiente
+redundancia para permitir que el receptor sepa que ha ocurrido un
+error (pero no qué error) y entonces solicite una retransmisión.
+• Medios confiables -s» códigos de detección de errores
+• Medios ruidosos -5 redundancia en cada bloque
+
+![alt text](image-24.png)
+![alt text](image-25.png)
+![alt text](image-26.png)
+![alt text](image-27.png)
+
+Analizaremos cuatro códigos de corrección de errores;
+1 Códigos de Hamming.
+Códigos convolucionales binarios,
+2.
+Códigos de Reed-Solomon.
+3.
+Códigos de verificación de paridad de baja densidad.
+4
+
+
+• Tres códigos de detección de errores distintos:
+• Paridad.
+• Sumas de verificación.
+• Comprobaciones de Redundancia Cíclica (CRC).
+
+
+ventana deslizante de un bit. Una sola trama a la vez, se pierde tiempo y no se puede tener una trama inicial al mismo tiempo.
+
+Retroceso N: ![alt text](image-28.png)
+
+PPP
