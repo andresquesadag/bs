@@ -32,7 +32,7 @@
 9. **¿Qué componentes tiene una relación entre entidades?** Nombre (en minusculas), cardinalidad y opcionalidad.
 10. **¿Qué caracteriza a una entidad intersección?**  
     <img src="image-1.png"  width="400"/>
-11. **¿Qué es transferabilidad?** Es la capacidad de una entidad de cambiar a lo largo del tiempo entre dos instancias.
+11. **¿Qué es transferabilidad?** Es la capacidad de una entidad de cambiar a lo largo del tiempo entre dos instancias. Si NO es transferible se representa con un `diamante.`
 12. **¿Qué es un subtipo?** Existen subtipos y supertipos, un supertipo es una entidad "general" que tiene dos o más "especializaciones" llamadas subtipos. Estos subtipos heredan todas las relaciones y atributos de la entidad supertipo, además de sus claves primarias (PK), también pueden tener sus propio subtipos. La forma de representar entidades subtipo es dentro del supertipo. `Siempre que se tenga una instancia de un supertipo se tiene la de uno de sus subtipos, es decir, una instancia no puede ser de un supertipo sin ser "clasificada" (solo puede ser de un subtipo)`. Ej:  
     <img src="image-2.png"  width="250"/>
 
@@ -121,7 +121,7 @@ atributo datatype(n) CONSTRAINT nombre_constraint CHECK (condición) --Funciona 
   ```
 - MODIFY:
   ```sql
-  ALTER TABLE nombre_tabla MODIFY atributo <valor por defecto, datatype o tamaño>;
+  ALTER TABLE nombre_tabla MODIFY (atributo <valor por defecto, datatype o tamaño>);
   ```
 - DROP:
   - Borrar una columna
@@ -151,6 +151,114 @@ atributo datatype(n) CONSTRAINT nombre_constraint CHECK (condición) --Funciona 
   -- Permitir escritura
   ALTER TABLE nombre_tabla READ WRITE;
   ```
+
+19. **¿Cómo se haría una copia de una tabla?**
+
+```sql
+-- Tomar en cuenta que no se copian las restricciones al hacer esto.
+CREATE TABLE copia_de_tabla_existente AS (SELECT * FROM tabla_existente)
+```
+
+20. **¿Cómo insertar valores a una tabla?**
+
+```sql
+-- Si se ponen en orden, no hace falta decir la columna.
+INSERT INTO nombre_tabla VALUES (value_para_col1, value_para_col2, ...);
+-- Si no quiere insertar un valor
+INSERT INTO nombre_tabla VALUES (value_para_col1, NULL, value_para_col3, ...);
+--Si quiero mantener el valor DEFAULT?
+INSERT INTO nombre_tabla VALUES (value_para_col1, DEFAULT, value_para_col3, ...);
+-- Si se ponen en cualquier orden o algún valor de la fila se dejará en el por defecto.
+-- Pónga los valores en orden en que nombra las cols.
+-- Si no pone una col. es implícito que no quiere poner un valor
+INSERT INTO nombre_tabla (col1, col2, ...) VALUES (value_para_col1, value_para_col2, ...);
+```
+
+21. **¿Cómo poner un autoincremental en una columna?**
+
+```sql
+CREATE TABLE nombre_tabla(
+  -- De uno en uno automático
+  col1 NUMBER GENERATED ALWAYS AS IDENTITY,
+  -- Si uno quiere personalizarlo
+  col2 NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+  ...
+);
+```
+
+22. **¿Cómo editar una fila?**
+
+```sql
+-- Ponga ese valor a todas las filas en la col. "col1"
+UPDATE nombre_tabla SET col1 = 'value';
+-- Ponga ese valor en una fila específica
+UPDATE nombre_tabla SET col1 = 'value' WHERE atributo_único = 'value';
+-- Ponga ese valor en varias filas específicas
+UPDATE nombre_tabla SET col1 = 'value' WHERE atributo_no_único = 'value';
+```
+
+23. **¿Cómo eliminar filas?**
+
+```sql
+-- Todas las filas a la mierda
+DELETE FROM nombre_tabla;
+-- Filas con atributo == 'value' a la mierda
+DELETE FROM nombre_tabla WHERE atributo = 'value';
+/*DELETE borra todas las filas y por ende la estructura de la tabla.
+Si no se quiere eso sino solo borrar los values se usa TRUNCATE*/
+TRUNCATE TABLE nombre_tabla;
+```
+
+24. **¿Qué sentencias TCL existen?**
+
+- `COMMIT` -> Equivalente a `git commit`: Commitea todos los cambios de sentencias DML no commiteados anteriormente.
+- `SAVEPOINT <nombre>` -> Equivalente a `git tag` o `git stash`: Un "checkpoint" de la grabación actual.
+- `ROLLBACK` -> Equivalente a `git reset --hard`: Desecha todos los cambios pendientes.
+- `ROLLBACK TO SAVEPOINT <nombre>` -> Equivalente a `git reset <commit>`: Desecha todos los cambios hechos hasta el SAVEPOINT.
+
+25. **¿Qué operaciones aritméticas tiene SQL?** Suma (+), Resta(-), Multiplicación(\*) y División(/).
+
+26. **¿Cómo se usa SELECT con alias?**
+
+```sql
+-- AS es opcional
+SELECT nombre_columna AS nom_col FROM nombre_tabla;
+SELECT nombre_columna nom_col FROM nombre_tabla;
+SELECT nombre_columna "Nombre de Columna" FROM nombre_tabla;
+```
+
+27. **¿Cómo concatenar en un SELECT?**
+
+```sql
+SELECT nombre || apellido1 || apellido2  AS "Nombre completo" FROM tabla_con_nombres;
+```
+
+28. **¿Cuándo utilizar qué comillas?**
+
+- Simples: Para valores. Ej: `valor = 'Value'`
+- Dobles: Para identificadores. Ej: `tabla AS "Tabla Épica"`
+- Q: Cuando hay comillas dentro de los operadores "comilla". Ej: `q'[McDonald's]'`
+
+29. **¿Qué hago para quitar las filas duplicadas de mi SELECT?** Usar `DISTINCT`
+
+```sql
+SELECT DISTINCT id_equipo, nombre_equipo FROM campeones_ligueros;
+```
+
+30. **¿Qué operación precede a WHERE?** FROM tabla
+
+31. **Describa los operadores de comparación**
+
+- `WHERE`: WHERE x = y;
+- `=`: x = y;
+- `>`, `<`, `>=`, `<=`: x < y;
+- `<>`: x <> y -> x != y
+- `BETWEEN ... AND ...`: BETWEEN 10 AND 20;
+- `IN <set>`, `NOT IN <set>`: manager_id IN (100, 101, 201);
+- `LIKE`: Coincide con un conjunto. name LIKE '\_S%' -> aSiento;
+  - % - cero o más chars.
+  - \_ - un char.
+- `IS NULL`, `IS NOT NULL`
 
 ## Notación Barker y otras
 
@@ -186,3 +294,13 @@ atributo datatype(n) CONSTRAINT nombre_constraint CHECK (condición) --Funciona 
 | `XMLTYPE`                        | Almacena datos XML estructurados.                                                          |
 | **BOOLEANO (solo PL/SQL)**       |                                                                                            |
 | `BOOLEAN`                        | Valores booleanos: `TRUE`, `FALSE`, o `NULL` (solo en PL/SQL, no en tablas SQL).           |
+
+## Prioridad de operadores
+
+![alt text](image-3.png)
+
+## Funciones útiles
+
+- `TO_DATE('escrito', 'formato')`: TO_DATE('Sep 04, 2020', 'MON DD, YYYY')
+- `NVL(expresión, valor_reemplazo)`: NVL(nombre, 'Desconocido') -> Si nombre es NULL lo cambia por "Desconocido".
+- `COALESCE(expresión1, expresión2, ..., expresiónN)`: Mostrar el primer valor no NULL.
