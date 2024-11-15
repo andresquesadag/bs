@@ -71,7 +71,7 @@ Un SYNONYM (sinónimo) es un alias o un nombre alternativo asignado a un objeto 
 
 ![alt text](image.png)
 
-````sql
+```sql
 SELECT SYNONYM_NAME, TABLE_OWNER, TABLE_NAME, DB_LINK
 FROM USER_SYNONYMS
 WHERE SYNONYM_NAME = '<nombre_sinonimo>';
