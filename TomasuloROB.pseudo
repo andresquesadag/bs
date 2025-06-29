@@ -1,0 +1,166 @@
+// Tomasulo Pseudo-code with CDB and Reorder Buffer integration
+
+// RISC-V based
+
+// Note: This only takes into consideration ALU operations that use registers and/or immediate values.
+
+check4Hazards(src0, src1) {
+  forEach (RS in [ARITH_RS, LOGIC_RS]) {
+    forEach (entry in RS) {
+      if (src0 == entry.dest) {
+        return entry.tag, 0;
+      } else if (src1 == entry.dest) {
+        return entry.tag, 1;
+      }
+    }
+  }
+  return null, -1; // No hazards found
+}
+
+addToRS(instruction, hazardTag, srcIndex) {
+  switch (instruction.opCode) {
+    case 'ADD':
+    case 'SUB':
+    case 'SLL':
+    case 'SRL':
+    case 'SRA':
+    case 'AND':
+    case 'OR':
+    case 'XOR':
+    case 'ADDI':
+    case 'ANDI':
+    case 'ORI':
+    case 'XORI':
+      RS = AL_RS; // Arithmetic/Logic RS
+      break;
+    default:
+      break;
+  }
+
+  if (srcIndex == 0) {
+    instruction.src0 = hazardTag;
+  } else if (srcIndex == 1) {
+    instruction.src1 = hazardTag;
+  }
+
+  v0 = null;
+  v1 = null;
+  if (instruction.opCode.hasImmediate()) {
+    v1 = instruction.v1;
+  }
+
+  // Is some source ready?
+  if (srcIndex == 0 and v1 == null) {
+    v1 = REGS[instruction.src1];
+  } else if (srcIndex == 1) {
+    v0 = REGS[instruction.src0];
+  } else if (srcIndex == -1) {
+    v0 = REGS[instruction.src0];
+    if (v1 == null) {
+      v1 = REGS[instruction.src1];
+    }
+  }
+
+  tag = concat(RS.index, RS.length - 1); // Format: [RS type][index]
+  instructionIndex = RS.add({
+    busy: 1,
+    tag: tag,
+    opCode: instruction.opCode,
+    v0: v0,
+    v1: v1,
+    src0: instruction.src0,
+    src1: instruction.src1,
+    dest: instruction.dest,
+    result: null,
+    resultReady: 0,
+  });
+
+  return tag;
+}
+
+issue(instruction) {
+  hazardTag, srcIndex = check4Hazards(instruction.src0, instruction.src1);
+  instructionTag = addToRS(instruction, hazardTag, srcIndex);
+
+  // Allocate in Reorder Buffer
+  reorderBuffer.add({
+    tag: instructionTag,
+    dest: instruction.dest,
+    value: null,
+    ready: 0,
+    done: 0
+  });
+
+  return instructionTag;
+}
+
+broadcastOnCDB(tag, value) {
+  // 1. Update all RS waiting for this tag
+  forEach (RS in [AL_RS, /*other RS's*/]) {
+    forEach (entry in RS) {
+      if (entry.busy) {
+        if (entry.src0 == tag) {
+          entry.v0 = value;
+          entry.src0 = null;
+        }
+        if (entry.src1 == tag) {
+          entry.v1 = value;
+          entry.src1 = null;
+        }
+      }
+    }
+  }
+
+  // 2. Update Reorder Buffer
+  forEach (robEntry in reorderBuffer) {
+    if (robEntry.tag == tag) {
+      robEntry.value = value;
+      robEntry.ready = 1;
+    }
+  }
+}
+
+commitResults() {
+  forEach (robEntry in reorderBuffer in-order) {
+    if (robEntry.ready and !robEntry.done) {
+      REGS[robEntry.dest] = robEntry.value;
+      robEntry.done = 1;
+
+      // Free the corresponding RS entry
+      robRS, robIndex = split(robEntry.tag);
+      robRS[robIndex].busy = 0;
+    } else {
+      break; // Stop at first entry not ready
+    }
+  }
+}
+
+Tomasulo() {
+  AL_RS;
+  reorderBuffer;
+
+  while (true) {
+    instruction = fetchNextInstruction();
+    if (instruction == null) break;
+
+    // === Issue stage ===
+    issue(instruction);
+
+    // === Execution stage ===
+    forEach (RS in [AL_RS, /*other RS's*/]) {
+      forEach (entry in RS) {
+        if (entry.busy and entry.v0 != null and entry.v1 != null and !entry.resultReady) {
+          result = ALU.execute(entry.opCode, entry.v0, entry.v1);
+          entry.result = result;
+          entry.resultReady = 1;
+
+          // Forward result on CDB
+          broadcastOnCDB(entry.tag, result);
+        }
+      }
+    }
+
+    // === Commit stage ===
+    commitResults();
+  }
+}
